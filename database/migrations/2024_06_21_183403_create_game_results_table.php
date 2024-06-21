@@ -27,7 +27,7 @@ class CreateGameResultsTable extends Migration
 
             $table->json('additional_data')->nullable(); // JSON column for storing additional game result data
             
-            $table->timestamps(); // Laravel default columns for created_at and updated_at
+            $table->timestamps(); 
         
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade'); 
