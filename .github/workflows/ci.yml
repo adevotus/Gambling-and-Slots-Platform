@@ -32,8 +32,11 @@ jobs:
     - name: Install Composer Dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Generate APP_KEY
-      run: php artisan key:generate
+    - name: Generate APP_KEY if not set
+      run: |
+        if [ -z "$APP_KEY" ]; then
+          php artisan key:generate
+        fi
 
     - name: Configure Laravel .env for CI
       run: |
@@ -55,5 +58,5 @@ jobs:
         DB_DATABASE: gambling
         DB_USERNAME: root
         DB_PASSWORD: secret
-        APP_KEY: ${{ secrets.APP_KEY }}
+        APP_KEY: ${{ secrets.APP_KEY }}  # Ensure secrets.APP_KEY is set in GitHub repository secrets
       run: php artisan test
